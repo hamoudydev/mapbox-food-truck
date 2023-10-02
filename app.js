@@ -13,7 +13,7 @@ const map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/dark-v11', 
 center: [-83.2343, 42.3285],
-zoom: 12.1
+zoom: 11
 });
 
 
