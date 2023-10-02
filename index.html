@@ -42,7 +42,7 @@
     .mapboxgl-popup-content {
       font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
       color: #000;
-      padding: 1;
+      padding: 0;
       width: 270px;
     }
 
@@ -110,248 +110,115 @@
     </header>
 
     <div id='map-container'>
-
-        <style>
-.mapboxgl-popup {
-max-width: 400px;
-font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-</style>
       <div id='map'></div>
     </div>
     <script>
+          var transformRequest = (url, resourceType) => {
+      var isMapboxRequest =
+        url.slice(8, 22) === "api.mapbox.com" ||
+        url.slice(10, 26) === "tiles.mapbox.com";
+      return {
+        url: isMapboxRequest
+          ? url.replace("?", "?pluginName=sheetMapper&")
+          : url
+      };
+    };
     mapboxgl.accessToken = 'pk.eyJ1IjoibXRpYmEiLCJhIjoiY2xuM2NzdDFxMGd2dTJ3cXd3dTB2aDZjbyJ9.017dL9x4hH7wv_PPp945Ow'; 
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/dark-v11', 
       center: [-83.2343, 42.3285],
-      zoom: 10.5
+      zoom: 12.1
     });
+    
 
-    map.on('load', () => {
-        map.addSource('places', {
-            'type': 'geojson',
-            'data': {
-                'type': 'FeatureCollection',
-                'features': [
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>The Burger Truck</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.3279815,-83.1569841">Map it</a><br><b>Food Items:</b> Burgers, Fries.</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.1569841, 42.3279815]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Hot Chicks Food Truck</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.29664903,-83.28466846">Map it</a><br><b>Food Items:</b> Wings, Subs.</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.28466846, 42.29664903]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Corn on the Corner</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.32661831,-83.28649218">Map it</a><br><b>Food Items:</b> Corn, Chicken Sandwiches, Subs, Fries.</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.28649218, 42.32661831]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Tuff Taco</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.344096,-83.1576426">Map it</a><br><b>Food Items:</b> Tacos</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.1576426, 42.344096]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Mediterranean Express</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.28296922,-83.25127256">Map it</a><br><b>Food Items:</b> Sandwiches, Rice, Chicken, Fries</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.25127256, 42.28296922]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>A1 Dogs & Burgers</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.3274258,-83.272136">Map it</a><br><b>Food Items:</b> Hotdogs, Burgers</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.272136, 42.3274258]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>The Spottruk</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.327345,-83.1572445">Map it</a><br><b>Food Items:</b> Burgers, Fries, Tacos</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.1572445, 42.327345]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Nami Sushi</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.2918907,-83.25015505">Map it</a><br><b>Food Items:</b> Sushi</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.25015505, 42.2918907]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Golden Burgers Food Truck</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.3184985,-83.1584155">Map it</a><br><b>Food Items:</b> Burgers, Fries</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.1584155, 42.3184985]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>The Burger Truck</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.34139829,-83.27129351">Map it</a><br><b>Food Items:</b> Burgers, Fries.</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.27129351, 42.34139829]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Catrina Mia</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.3344434,-83.2736938">Map it</a><br><b>Food Items:</b> Tacos</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.2736938, 42.3344434]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>Chico’s Burritos</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.3068969,-83.1887028">Map it</a><br><b>Food Items:</b> Burritos</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.1887028, 42.3068969]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>The Lobster Food Truck</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.32925275,-83.1885806">Map it</a><br><b>Food Items:</b> Seafood</p>'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.1885806, 42.32925275]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'description':
-                                '<strong>The Bistro Box</strong><p><b>Address:</b> <a href="http://maps.apple.com/?daddr=42.3265232,-83.2806373">Map it</a><br><b>Hours</b> 6PM-Midnight or until sold out<b><br>Food Items:</b> Pasta, Rice bowls, Panini’s</p>',
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-83.2806373, 42.3265232]
-                        }
-                    }
-                ]
-            }
-        });
-        // Add a layer showing the places.
-        map.addLayer({
-            'id': 'places',
-            'type': 'circle',
-            'source': 'places',
-            'paint': {
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        url: 'https://docs.google.com/spreadsheets/d/101KsINiQF23nHOiIZtIXJ01-zWrGyA4DQ_1U6hasDcA/gviz/tq?tqx=out:csv&sheet=Sheet1',
+        dataType: "text",
+        success: function (csvData) { makeGeoJSON(csvData); }
+      });
+
+function makeGeoJSON(csvData) {
+        csv2geojson.csv2geojson(csvData, {
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
+          delimiter: ','
+        }, function (err, data) {
+          map.on('load', function () {
+
+            //Add the the layer to the map
+            map.addLayer({
+              'id': 'csvData',
+              'type': 'circle',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
+              'paint': {
                 'circle-color': '#4264fb',
                 'circle-radius': 12,
                 'circle-stroke-width': 2,
                 'circle-stroke-color': '#ffffff'
-            }
-        });
+              }
+            });
+            
 
-// Add a layer showing the places.
-map.addLayer({
-'id': 'places',
-'type': 'symbol',
-'source': 'places',
-'layout': {
-'icon-image': ['get', 'icon'],
-'icon-allow-overlap': true
-}
-});
- 
-// When a click event occurs on a feature in the places layer, open a popup at the
-// location of the feature, with description HTML from its properties.
-map.on('click', 'places', (e) => {
-// Copy coordinates array.
-const coordinates = e.features[0].geometry.coordinates.slice();
-const description = e.features[0].properties.description;
- 
-// Ensure that if the map is zoomed out such that multiple
-// copies of the feature are visible, the popup appears
-// over the copy being pointed to.
-while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-}
- 
-new mapboxgl.Popup()
-.setLngLat(coordinates)
-.setHTML(description)
-.addTo(map);
-});
- 
-// Change the cursor to a pointer when the mouse is over the places layer.
-map.on('mouseenter', 'places', () => {
-map.getCanvas().style.cursor = 'pointer';
-});
- 
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'places', () => {
-map.getCanvas().style.cursor = '';
-});
-});
-</script>
- 
-</body>
+
+            // When a click event occurs on a feature in the csvData layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            map.on('click', 'csvData', function (e) {
+              var coordinates = e.features[0].geometry.coordinates.slice();
+
+              //set popup text
+              //You can adjust the values of the popup to match the headers of your CSV.
+              // For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
+              var description = `<h3>` + e.features[0].properties.Name + `</h3>` + `<h4>` + `<b>` + `Address: ` + `</b>` + e.features[0].properties.Map + `</h4>` +  `<h4>` + `<b>` + `Food Items: ` + `</b>` + e.features[0].properties.Foods + `</h4>` + `<h4>` + `<b>` + `Hours: ` + `</b>` + e.features[0].properties.Hours + `</h4>`;
+
+              // Ensure that if the map is zoomed out such that multiple
+              // copies of the feature are visible, the popup appears
+              // over the copy being pointed to.
+              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+              }
+
+              //add Popup to map
+
+              new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description)
+                .addTo(map);
+            });
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'csvData', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', function () {
+              map.getCanvas().style.cursor = '';
+            });
+
+            var bbox = turf.bbox(data);
+            map.fitBounds(bbox, { padding: 50 });
+
+          });
+
+        });
+      };
+    });
+
+
+
+
+    </script>
+  </body>
       <footer>
       
         Created and hosted by 🦌 <a href="https://dearborn.io">DearbornIO</a>
 
- <p>Live Since: 9/29/2023 <br> Last Updated: 10/01/2023 4:55 PM</p>
+ <p>Live Since: 9/29/2023 <br> Last Updated: 9/30/2023 10:16 AM</p>
     </footer>
 </html>
