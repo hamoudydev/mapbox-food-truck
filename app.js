@@ -33,8 +33,7 @@ delimiter: ','
 }, function (err, data) {
 map.on('load', function () {
 
-  //Add the the layer to the map
-  map.addLayer({
+map.addLayer({
     'id': 'csvData',
     'type': 'circle',
     'source': {
@@ -47,46 +46,47 @@ map.on('load', function () {
       'circle-stroke-width': 2,
       'circle-stroke-color': '#ffffff'
     }
-  });
-  
+});
 
+// When a click event occurs on a feature in the csvData layer, open a popup at the
+// location of the feature, with description HTML from its properties.
+map.on('click', 'csvData', function (e) {
+ var coordinates = e.features[0].geometry.coordinates.slice();
 
-  // When a click event occurs on a feature in the csvData layer, open a popup at the
-  // location of the feature, with description HTML from its properties.
-  map.on('click', 'csvData', function (e) {
-    var coordinates = e.features[0].geometry.coordinates.slice();
+//set popup text
+//You can adjust the values of the popup to match the headers of your CSV.
+// For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
+var description = `<h3>` + e.features[0].properties.Name + `</h3>` + 
+    `<h4>` + `<b>` + `Address: ` + `</b>` + e.features[0].properties.Map + `</h4>` +  
+    `<h4>` + `<b>` + `Food Items: ` + `</b>` + e.features[0].properties.Foods + `</h4>` + 
+    `<h4>` + `<b>` + `Hours: ` + `</b>` + e.features[0].properties.Hours + `</h4>`;
 
-    //set popup text
-    //You can adjust the values of the popup to match the headers of your CSV.
-    // For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
-    var description = `<h3>` + e.features[0].properties.Name + `</h3>` + `<h4>` + `<b>` + `Address: ` + `</b>` + e.features[0].properties.Map + `</h4>` +  `<h4>` + `<b>` + `Food Items: ` + `</b>` + e.features[0].properties.Foods + `</h4>` + `<h4>` + `<b>` + `Hours: ` + `</b>` + e.features[0].properties.Hours + `</h4>`;
-
-    // Ensure that if the map is zoomed out such that multiple
-    // copies of the feature are visible, the popup appears
-    // over the copy being pointed to.
-    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
-    //add Popup to map
+//add Popup to map
 
-    new mapboxgl.Popup()
+new mapboxgl.Popup()
       .setLngLat(coordinates)
       .setHTML(description)
       .addTo(map);
-  });
+});
 
-  // Change the cursor to a pointer when the mouse is over the places layer.
-  map.on('mouseenter', 'csvData', function () {
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'csvData', function () {
     map.getCanvas().style.cursor = 'pointer';
-  });
+});
 
-  // Change it back to a pointer when it leaves.
-  map.on('mouseleave', 'places', function () {
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'places', function () {
     map.getCanvas().style.cursor = '';
-  });
+});
 
-  var bbox = turf.bbox(data);
+var bbox = turf.bbox(data);
   map.fitBounds(bbox, { padding: 50 });
 
 });
