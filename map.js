@@ -1,35 +1,35 @@
 var transformRequest = (url, resourceType) => {
 var isMapboxRequest =
-url.slice(8, 22) === "api.mapbox.com" ||
-url.slice(10, 26) === "tiles.mapbox.com";
+  url.slice(8, 22) === "api.mapbox.com" ||
+  url.slice(10, 26) === "tiles.mapbox.com";
 return {
-url: isMapboxRequest
-? url.replace("?", "?pluginName=sheetMapper&")
-: url
+  url: isMapboxRequest
+  ? url.replace("?", "?pluginName=sheetMapper&")
+  : url
 };
 };
 mapboxgl.accessToken = 'pk.eyJ1IjoibXRpYmEiLCJhIjoiY2xuM2NzdDFxMGd2dTJ3cXd3dTB2aDZjbyJ9.017dL9x4hH7wv_PPp945Ow'; 
-const map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/dark-v11', 
-center: [-83.2343, 42.3285],
-zoom: 11
+  const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/dark-v11', 
+  center: [-83.2343, 42.3285],
+  zoom: 11
 });
 
 
 $(document).ready(function () {
 $.ajax({
-type: "GET",
-url: 'https://docs.google.com/spreadsheets/d/101KsINiQF23nHOiIZtIXJ01-zWrGyA4DQ_1U6hasDcA/gviz/tq?tqx=out:csv&sheet=Sheet1',
-dataType: "text",
-success: function (csvData) { makeGeoJSON(csvData); }
+  type: "GET",
+  url: 'https://docs.google.com/spreadsheets/d/101KsINiQF23nHOiIZtIXJ01-zWrGyA4DQ_1U6hasDcA/gviz/tq?tqx=out:csv&sheet=Sheet1',
+  dataType: "text",
+  success: function (csvData) { makeGeoJSON(csvData); }
 });
 
 function makeGeoJSON(csvData) {
-csv2geojson.csv2geojson(csvData, {
-latfield: 'Latitude',
-lonfield: 'Longitude',
-delimiter: ','
+  csv2geojson.csv2geojson(csvData, {
+  latfield: 'Latitude',
+  lonfield: 'Longitude',
+  delimiter: ','
 }, function (err, data) {
 map.on('load', function () {
 

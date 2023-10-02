@@ -1,85 +1,87 @@
 body { 
-  margin: 0; 
-  padding: 0; 
-  background-color: #1a1a1a;
-  color: #f0f0f0;
+    margin: 0; 
+    padding: 0; 
+    background-color: #1a1a1a;
+    color: #f0f0f0;
 }
 #map-container {
-  position: relative;
-  height: 600px;
+    position: relative;
+    height: 600px;
 }
 #map { 
-  position: absolute; 
-  top: 0; 
-  bottom: 0; 
-  width: 100%; 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    width: 100%; 
 }
+
 /* Popup styling */
 
 .mapboxgl-popup {
-padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .mapboxgl-popup-close-button {
-display: none;
+    display: none;
 }
 
 .mapboxgl-popup-content {
-font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-color: #000;
-padding: 0;
-width: 270px;
+    font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+    color: #000;
+    padding: 0;
+    width: 270px;
 }
 
 .mapboxgl-popup-content-wrapper {
-padding: 1%;
+    padding: 1%;
 }
 
 .mapboxgl-popup-content h3 {
-background: rgb(61, 59, 59);
-text-align: center;
-color: #fff;
-margin: 0;
-display: block;
-padding: 15px;
-font-weight: 700;
-margin-top: -5px;
+    background: rgb(61, 59, 59);
+    text-align: center;
+    color: #fff;
+    margin: 0;
+    display: block;
+    padding: 15px;
+    font-weight: 700;
+    margin-top: -5px;
 }
 
 .mapboxgl-popup-content h4 {
-margin: 0;
-display: block;
-padding: 10px 3px 10px 10px;
-font-weight: 400;
+    background: #F5F3F5;
+    margin: 0;
+    display: block;
+    padding: 10px 3px 10px 10px;
+    font-weight: 400;
 }
 
 .mapboxgl-container {
-cursor: pointer;
+    cursor: pointer;
 }
 
 .mapboxgl-popup-anchor-top>.mapboxgl-popup-content {
-margin-top: 3px;
+    margin-top: 3px;
 }
 
 .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
-border-bottom-color: rgb(61, 59, 59);
+    border-bottom-color: rgb(61, 59, 59);
 }
 header {
-  background-color: #1a1a1a;
-  padding: 1px;
-  text-align: center;
+    background-color: #1a1a1a;
+    padding: 1px;
+    text-align: center;
 }
 header h1 {
-  font-family: 'Titan One', cursive;
-  font-size: 32px;
+    font-family: 'Titan One', cursive;
+    font-size: 32px;
 }
 header p {
-  font-size: 14px;
-  font-family: 'Ubuntu', serif;
+    font-size: 14px;
+    font-family: 'Ubuntu', serif;
 }
 footer {
-  background-color: 1a1a1a;
-  padding: 10px;
-  text-align: center;
-  font: 14px 'Ubuntu', san-serif;
+    background-color: 1a1a1a;
+    padding: 10px;
+    text-align: center;
+    font: 14px 'Ubuntu', san-serif;
 }
